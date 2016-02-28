@@ -22,7 +22,7 @@ public class Employee
 	String firstName, lastName, email, title, address, city, state, homePhone, workPhone;
 
 	Date birth;
-	int zip;
+	int zip, id;
 	
 	FileWriter fw;
 	File err = new File("error.txt");
@@ -55,6 +55,7 @@ public class Employee
 			homePhone = rs.getString("H-Phone");
 			workPhone = rs.getString("W-Phone");
 			birth = rs.getDate("DateOfBirth");
+			id = rs.getInt("id");
 //			System.out.println(firstName + " " + lastName + " " + email + " " + title + " " + address + " " + city + " " + state + " " + zip);
 		} 
 		catch (SQLException e) 
@@ -141,7 +142,12 @@ public class Employee
 	public Date getBirth()
 	{
 		return this.birth;
-}
+	}
+	
+	public int getID()
+	{
+		return this.id;
+	}
 
 	public void addToDatabase() 
 	{
@@ -168,6 +174,7 @@ public class Employee
 			rs.updateString("W-Phone", this.getWorkPhone());
 
 			rs.insertRow();
+			id = rs.getInt("id");
 			JOptionPane.showMessageDialog(new JPanel(), "Success: Added Employee to Database");
 		}
 		catch(SQLException e)

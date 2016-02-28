@@ -9,11 +9,18 @@ import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SpringLayout;
 
@@ -21,6 +28,8 @@ import com.workforce.objects.Employee;
 
 public class SpecificEmployee extends JFrame
 {
+	String host = "jdbc:mysql://localhost:3306/workforce?useSSL=false";
+	
 	Employee em;
 	EmployeeList window;
 	
@@ -59,6 +68,7 @@ public class SpecificEmployee extends JFrame
 		labels.add(new JLabel("Home Phone #: " + em.getHomePhone()));
 		labels.add(new JLabel("Work Phone #: " + em.getWorkPhone()));
 		JButton backB = new JButton("Close");
+		JButton deleteB = new JButton("Delete Employee");
 
 		SpringLayout layout = new SpringLayout();
 		contentPane.setLayout(layout);
@@ -78,11 +88,8 @@ public class SpecificEmployee extends JFrame
 			pan1.add(labels.get(i));
 		}
 		
-		for(int i = 0; i < 3; i++)
-		{
-			pan2.add(new JLabel());
-		}
 		pan2.add(backB);
+		pan2.add(deleteB);
 		
 		contentPane.add(pan1);
 		contentPane.add(pan2);
@@ -101,6 +108,14 @@ public class SpecificEmployee extends JFrame
             }
         });
 		
+		deleteB.addActionListener(new ActionListener() {
+			 
+            public void actionPerformed(ActionEvent e)
+            {
+            	deleteActionListen();
+            }
+        });
+		
 		this.addWindowListener(new WindowAdapter(){
 			public void windowClosing(WindowEvent e){
 				try {fw.close();} 
@@ -114,6 +129,54 @@ public class SpecificEmployee extends JFrame
 	private void actionListen()
 	{
 		this.setVisible(false);
+	}
+	
+	private void deleteActionListen()
+	{
+		int result = JOptionPane.showConfirmDialog(this, "Warning: Are you sure you want\n to delete this employee?");
+		if(result == JOptionPane.YES_OPTION)
+		{
+			try
+			{
+				
+				Connection con = DriverManager.getConnection(host, "root", "password1");
+				
+				Statement stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+				String SQL = "SELECT * FROM employees"; //workforce (database) --> employees (table)
+				ResultSet rs = stmt.executeQuery(SQL);
+				
+				while(rs.next())
+				{
+					if(rs.getInt("id") == em.getID())
+					{
+						rs.deleteRow();
+						
+						stmt.close();
+						rs.close();
+						
+						JOptionPane.showMessageDialog(this, "Success: Employee Deleted");
+						actionListen();
+						return;
+					}
+				}
+				JOptionPane.showMessageDialog(this, "Failure: Employee Not Found");
+				actionListen();
+			}
+			catch(SQLException e)
+			{
+				JOptionPane.showMessageDialog(rootPane, "Error - Problem with the Server");
+				System.out.println(e.getMessage());
+				
+				Date date = new Date();
+				
+				try
+				{
+					fw.write(e.getMessage() + ": " + date); 
+					fw.write(System.getProperty( "line.separator" ));
+				} 
+				catch (IOException er) {er.printStackTrace();}
+			}
+		}
 	}
 	
 }
