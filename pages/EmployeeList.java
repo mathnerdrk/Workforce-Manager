@@ -96,8 +96,11 @@ public class EmployeeList extends JFrame
 		buttonPan.setBackground(Color.white);
 		JButton addB = new JButton("Add Employee");
 		JButton refreshB = new JButton("Refresh Page");
+		JButton exitB = new JButton("Exit Program");
+		
 		buttonPan.add(addB);
 		buttonPan.add(refreshB);
+		buttonPan.add(exitB);
 		contentPane.add(buttonPan);
 		
 		layout.putConstraint(SpringLayout.HORIZONTAL_CENTER, headerPan, 0, SpringLayout.HORIZONTAL_CENTER, contentPane);
@@ -136,6 +139,14 @@ public class EmployeeList extends JFrame
             public void actionPerformed(ActionEvent e)
             {
             	refreshActionListen();
+            }
+        });
+		
+		exitB.addActionListener(new ActionListener() {
+			 
+            public void actionPerformed(ActionEvent e)
+            {
+            	exitActionListen();
             }
         });
 		
@@ -238,6 +249,15 @@ public class EmployeeList extends JFrame
 	{
 		this.setVisible(false);
 		EmployeeList em = new EmployeeList();
+	}
+	
+	private void exitActionListen()
+	{
+		int result = JOptionPane.showConfirmDialog(this, "Warning: Are you sure you want to close the program?");
+		if(result == JOptionPane.YES_OPTION)
+		{
+			this.dispose();
+		}
 	}
 	
 	private void setColumnWidth(TableColumnModel tcm)

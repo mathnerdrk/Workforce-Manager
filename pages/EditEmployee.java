@@ -23,10 +23,13 @@ import javax.swing.SpringLayout;
 
 import com.workforce.objects.Employee;
 
-public class AddEmployee extends JFrame
+public class EditEmployee extends JFrame
 {
 	FileWriter fw;
 	File err = new File("error.txt");
+	
+	Employee em;
+	int id;
 	
 	JTextField firstNameTF, lastNameTF, emailTF, titleTF, addressTF, cityTF;
 	JFormattedTextField yearTF, dateTF, zipTF, homePhoneTF, workPhoneTF;
@@ -35,8 +38,10 @@ public class AddEmployee extends JFrame
 	static final String[] states = {"AK","AL","AR","AZ","CA","CO","CT","DC","DE","FL","GA","GU","HI","IA","ID", "IL","IN","KS","KY","LA","MA","MD","ME","MH","MI","MN","MO","MS","MT","NC","ND","NE","NH","NJ","NM","NV","NY", "OH","OK","OR","PA","PR","PW","RI","SC","SD","TN","TX","UT","VA","VI","VT","WA","WI","WV","WY"};
 	static final String[] months = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
 	
-	public AddEmployee()
+	public EditEmployee(Employee e)
 	{
+		em = e;
+		id = em.getID();
 		prepare();
 	}
 	
@@ -45,7 +50,7 @@ public class AddEmployee extends JFrame
 		try {fw = new FileWriter(err);} 
 		catch (IOException e2) {e2.printStackTrace();}
 		
-		this.setTitle("Add Employee to Database");
+		this.setTitle("Edit Employee");
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setVisible(true);
 		this.setSize(500, 300);
@@ -55,7 +60,7 @@ public class AddEmployee extends JFrame
 		SpringLayout layout = new SpringLayout();
 		contentPane.setLayout(layout);
 		
-		JLabel headerLabel = new JLabel("<HTML><U>Add Employee:</U></HTML>");
+		JLabel headerLabel = new JLabel("<HTML><U>Edit Employee:</U></HTML>");
 		headerLabel.setFont(headerLabel.getFont().deriveFont(14.0f));
 		JLabel firstNameL = new JLabel("First Name: ");
 		JLabel lastNameL = new JLabel("Last Name: ");
@@ -71,6 +76,7 @@ public class AddEmployee extends JFrame
 		JButton addB = new JButton("Add Employee");
 		JButton cancelB = new JButton("Cancel Addition");
 		
+		//Start here!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 		firstNameTF = new JTextField();
 		firstNameTF.setColumns(10);
 		lastNameTF = new JTextField();

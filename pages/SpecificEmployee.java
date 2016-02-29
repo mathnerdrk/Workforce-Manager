@@ -69,6 +69,7 @@ public class SpecificEmployee extends JFrame
 		labels.add(new JLabel("Work Phone #: " + em.getWorkPhone()));
 		JButton backB = new JButton("Close");
 		JButton deleteB = new JButton("Delete Employee");
+		JButton editB = new JButton("Edit Employee");
 
 		SpringLayout layout = new SpringLayout();
 		contentPane.setLayout(layout);
@@ -80,16 +81,17 @@ public class SpecificEmployee extends JFrame
 		pan1Layout.setVgap(10);
 		pan1Layout.setHgap(0);
 		pan1.setLayout(pan1Layout);
-		GridLayout pan2Layout = new GridLayout(1, 4);
+		GridLayout pan2Layout = new GridLayout(1, 3);
+		pan2Layout.setHgap(30);
 		pan2.setLayout(pan2Layout);
 		
 		for(int i = 0; i < labels.size(); i++)
 		{
 			pan1.add(labels.get(i));
 		}
-		
-		pan2.add(backB);
 		pan2.add(deleteB);
+		pan2.add(editB);
+		pan2.add(backB);
 		
 		contentPane.add(pan1);
 		contentPane.add(pan2);
@@ -116,6 +118,14 @@ public class SpecificEmployee extends JFrame
             }
         });
 		
+		editB.addActionListener(new ActionListener() {
+			 
+            public void actionPerformed(ActionEvent e)
+            {
+            	editActionListen();
+            }
+        });
+		
 		this.addWindowListener(new WindowAdapter(){
 			public void windowClosing(WindowEvent e){
 				try {fw.close();} 
@@ -123,7 +133,6 @@ public class SpecificEmployee extends JFrame
 				System.exit(0);
 			}
 		});
-		
 	}
 	
 	private void actionListen()
@@ -131,14 +140,19 @@ public class SpecificEmployee extends JFrame
 		this.setVisible(false);
 	}
 	
+	private void editActionListen()
+	{
+		this.setVisible(false);
+		EditEmployee ee = new EditEmployee(em);
+	}
+	
 	private void deleteActionListen()
 	{
-		int result = JOptionPane.showConfirmDialog(this, "Warning: Are you sure you want\n to delete this employee?");
+		int result = JOptionPane.showConfirmDialog(this, "Warning: Are you sure you want to delete this employee?");
 		if(result == JOptionPane.YES_OPTION)
 		{
 			try
 			{
-				
 				Connection con = DriverManager.getConnection(host, "root", "password1");
 				
 				Statement stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
@@ -178,5 +192,4 @@ public class SpecificEmployee extends JFrame
 			}
 		}
 	}
-	
 }
