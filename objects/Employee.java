@@ -183,4 +183,9 @@ public class Employee
 			System.out.println(e.getMessage());
 		}
 	}
+	
+	public void changeDetails()
+	{
+		
+	}
 }

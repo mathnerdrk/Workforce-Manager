@@ -9,7 +9,12 @@ import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.sql.Connection;
 import java.sql.Date;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.text.NumberFormat;
 
 import javax.swing.JButton;
@@ -25,6 +30,8 @@ import com.workforce.objects.Employee;
 
 public class EditEmployee extends JFrame
 {
+	String host = "jdbc:mysql://localhost:3306/workforce?useSSL=false";
+	
 	FileWriter fw;
 	File err = new File("error.txt");
 	
@@ -73,21 +80,45 @@ public class EditEmployee extends JFrame
 		JLabel homePhoneL = new JLabel("Home Phone #: ");
 		JLabel workPhoneL = new JLabel("Work Phone #: ");
 		JLabel birthL = new JLabel("Date of Birth: ");
-		JButton addB = new JButton("Add Employee");
+		JButton addB = new JButton("Change Employee");
 		JButton cancelB = new JButton("Cancel Addition");
 		
 		//Start here!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-		firstNameTF = new JTextField();
+		try
+		{		
+			Connection con = DriverManager.getConnection(host, "root", "password1");
+			
+			Statement stmt = con.createStatement();
+			String SQL = "SELECT * FROM employees"; //workforce (database) --> employees (table)
+			ResultSet rs = stmt.executeQuery(SQL);
+			
+		}
+		catch(SQLException e)
+		{
+			JOptionPane.showMessageDialog(rootPane, "Error - Problem with the Server");
+			System.out.println(e.getMessage());
+			
+			java.util.Date date = new java.util.Date();
+			
+			try
+			{
+				fw.write(e.getMessage() + ": " + date); 
+				fw.write(System.getProperty( "line.separator" ));
+			} 
+			catch (IOException er) {er.printStackTrace();}
+		}
+		
+		firstNameTF = new JTextField(em.getFirstName());
 		firstNameTF.setColumns(10);
-		lastNameTF = new JTextField();
+		lastNameTF = new JTextField(em.getLastName());
 		lastNameTF.setColumns(10);
-		emailTF = new JTextField();
+		emailTF = new JTextField(em.getEmail());
 		emailTF.setColumns(15);
-		titleTF = new JTextField();
+		titleTF = new JTextField(em.getTitle());
 		titleTF.setColumns(14);
-		addressTF = new JTextField();
+		addressTF = new JTextField(em.getAddress());
 		addressTF.setColumns(30);
-		cityTF = new JTextField();
+		cityTF = new JTextField(em.getCity());
 		cityTF.setColumns(10);
 		
 		stateCB = new JComboBox(states);
@@ -97,16 +128,35 @@ public class EditEmployee extends JFrame
 		stateCB.setMinimumSize(new Dimension(width1, height1));
 		stateCB.setPreferredSize(new Dimension(width1, height1));
 		stateCB.setSize(new Dimension(width1, height1));
+		
+		boolean done = false;
+		for(int i = 0; i < states.length; i++)
+		{
+			if(em.getState().equals(states[i]))
+			{
+				stateCB.setSelectedIndex(i);
+				done = true;
+				break;
+			}
+		}
+		
+		if(!done)
+		{
+			stateCB.setSelectedIndex(0);
+		}
+		
 		monthCB = new JComboBox(months);
 		monthCB.setMaximumSize(new Dimension(width2, height1));
 		monthCB.setMinimumSize(new Dimension(width2, height1));
 		monthCB.setPreferredSize(new Dimension(width2, height1));
 		monthCB.setSize(new Dimension(width2, height1));
+		monthCB.setSelectedIndex(em.getBirth().getMonth());
 		
-		homePhoneTF = new JFormattedTextField();
+		
+		homePhoneTF = new JFormattedTextField(em.getHomePhone());
 		homePhoneTF.setColumns(10);
 		
-		workPhoneTF = new JFormattedTextField();
+		workPhoneTF = new JFormattedTextField(em.getWorkPhone());
 		workPhoneTF.setColumns(10);
 		
 		NumberFormat yearDecimalFormat = NumberFormat.getNumberInstance();
@@ -115,6 +165,7 @@ public class EditEmployee extends JFrame
 		yearDecimalFormat.setMaximumIntegerDigits(4);
 		
 		yearTF = new JFormattedTextField(yearDecimalFormat);
+		yearTF.setText(em.getBirth().getYear() + 1900 + "");
 		yearTF.setColumns(4);
 		
 		NumberFormat dateDecimalFormat = NumberFormat.getNumberInstance();
@@ -123,6 +174,7 @@ public class EditEmployee extends JFrame
 		dateDecimalFormat.setMaximumIntegerDigits(2);
 		
 		dateTF = new JFormattedTextField(dateDecimalFormat);
+		dateTF.setText(em.getBirth().getDate() + "");
 		dateTF.setColumns(2); //maximum int = 31
 		
 		NumberFormat decimalFormat = NumberFormat.getNumberInstance();
@@ -131,6 +183,7 @@ public class EditEmployee extends JFrame
 		decimalFormat.setMaximumIntegerDigits(5);
 		
 		zipTF = new JFormattedTextField(decimalFormat);
+		zipTF.setText(em.getZipCode() + "");
 		zipTF.setColumns(5);
 		
 		contentPane.add(headerLabel);

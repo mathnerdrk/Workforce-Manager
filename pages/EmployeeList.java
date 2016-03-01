@@ -163,6 +163,7 @@ public class EmployeeList extends JFrame
 	{
 		Employee em = new Employee(row, fw);
 		SpecificEmployee window = new SpecificEmployee(em, this);
+		this.setVisible(false);
 	}
 	
 	public void doConnect()
@@ -256,7 +257,7 @@ public class EmployeeList extends JFrame
 		int result = JOptionPane.showConfirmDialog(this, "Warning: Are you sure you want to close the program?");
 		if(result == JOptionPane.YES_OPTION)
 		{
-			this.dispose();
+			this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
 		}
 	}
 	

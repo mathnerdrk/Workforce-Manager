@@ -137,6 +137,7 @@ public class SpecificEmployee extends JFrame
 	
 	private void actionListen()
 	{
+		EmployeeList el = new EmployeeList();
 		this.setVisible(false);
 	}
 	
