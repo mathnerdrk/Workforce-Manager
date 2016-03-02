@@ -43,6 +43,8 @@ public class EmployeeList extends JFrame
 	File err = new File("error.txt");
 	int width = 600, height = 600;
 	
+	JTable table;
+	
 	public EmployeeList()
 	{
 		prepare();
@@ -76,7 +78,7 @@ public class EmployeeList extends JFrame
 		
 		JPanel tablePan = new JPanel();
 		tablePan.setBackground(Color.white);
-		JTable table = new JTable(data, columns);
+		table = new JTable(data, columns);
 		table.setModel(new MyModel(data, columns));
 		table.setPreferredScrollableViewportSize(new Dimension(width-76, this.height-240));
 		table.setFillsViewportHeight(true);
@@ -95,11 +97,15 @@ public class EmployeeList extends JFrame
 		JPanel buttonPan = new JPanel();
 		buttonPan.setBackground(Color.white);
 		JButton addB = new JButton("Add Employee");
-		JButton refreshB = new JButton("Refresh Page");
+		JButton deleteB = new JButton("Delete Selection");
+		JButton editB = new JButton("Edit Selection");
+//		JButton refreshB = new JButton("Refresh Page");
 		JButton exitB = new JButton("Exit Program");
 		
 		buttonPan.add(addB);
-		buttonPan.add(refreshB);
+		buttonPan.add(deleteB);
+		buttonPan.add(editB);
+//		buttonPan.add(refreshB);
 		buttonPan.add(exitB);
 		contentPane.add(buttonPan);
 		
@@ -134,13 +140,29 @@ public class EmployeeList extends JFrame
             }
         });
 		
-		refreshB.addActionListener(new ActionListener() {
+		deleteB.addActionListener(new ActionListener() {
 			 
             public void actionPerformed(ActionEvent e)
             {
-            	refreshActionListen();
+            	deleteActionListen();
             }
         });
+		
+		editB.addActionListener(new ActionListener() {
+			 
+            public void actionPerformed(ActionEvent e)
+            {
+            	editActionListen();
+            }
+        });
+		
+//		refreshB.addActionListener(new ActionListener() {
+//			 
+//            public void actionPerformed(ActionEvent e)
+//            {
+//            	refreshActionListen();
+//            }
+//        });
 		
 		exitB.addActionListener(new ActionListener() {
 			 
@@ -258,6 +280,57 @@ public class EmployeeList extends JFrame
 		if(result == JOptionPane.YES_OPTION)
 		{
 			this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
+		}
+	}
+	
+	private void editActionListen()
+	{
+		this.setVisible(false);
+		EditEmployee ee = new EditEmployee(new Employee(table.getSelectedRow(), fw));
+	}
+	
+	private void deleteActionListen()
+	{
+		int result = JOptionPane.showConfirmDialog(this, "Warning: Are you sure you want to delete this employee?");
+		if(result == JOptionPane.YES_OPTION)
+		{
+			int row = table.getSelectedRow();
+			try
+			{
+				Connection con = DriverManager.getConnection(host, "root", "password1");
+				
+				Statement stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+				String SQL = "SELECT * FROM employees"; //workforce (database) --> employees (table)
+				ResultSet rs = stmt.executeQuery(SQL);
+				
+				rs.next();
+				for(int i = 0; i < row; i++)
+				{
+					rs.next(); 
+				}
+				
+				rs.deleteRow();
+					
+				stmt.close();
+				rs.close();
+				
+				JOptionPane.showMessageDialog(this, "Success: Employee Deleted");
+				refreshActionListen();
+			}
+			catch(SQLException e)
+			{
+				JOptionPane.showMessageDialog(rootPane, "Error - Problem with the Server");
+				System.out.println(e.getMessage());
+				
+				Date date = new Date();
+				
+				try
+				{
+					fw.write(e.getMessage() + ": " + date); 
+					fw.write(System.getProperty( "line.separator" ));
+				} 
+				catch (IOException er) {er.printStackTrace();}
+			}
 		}
 	}
 	

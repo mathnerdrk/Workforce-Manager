@@ -67,7 +67,7 @@ public class SpecificEmployee extends JFrame
 		labels.add(new JLabel("Zip Code: " + em.getZipCode()));
 		labels.add(new JLabel("Home Phone #: " + em.getHomePhone()));
 		labels.add(new JLabel("Work Phone #: " + em.getWorkPhone()));
-		JButton backB = new JButton("Close");
+		JButton backB = new JButton("Back to List");
 		JButton deleteB = new JButton("Delete Employee");
 		JButton editB = new JButton("Edit Employee");
 

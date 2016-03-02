@@ -80,10 +80,9 @@ public class EditEmployee extends JFrame
 		JLabel homePhoneL = new JLabel("Home Phone #: ");
 		JLabel workPhoneL = new JLabel("Work Phone #: ");
 		JLabel birthL = new JLabel("Date of Birth: ");
-		JButton addB = new JButton("Change Employee");
+		JButton changeB = new JButton("Change Employee");
 		JButton cancelB = new JButton("Cancel Addition");
 		
-		//Start here!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 		try
 		{		
 			Connection con = DriverManager.getConnection(host, "root", "password1");
@@ -213,7 +212,7 @@ public class EditEmployee extends JFrame
 		contentPane.add(stateCB);
 		contentPane.add(monthCB);
 		
-		contentPane.add(addB);
+		contentPane.add(changeB);
 		contentPane.add(cancelB);
 		
 		layout.putConstraint(SpringLayout.HORIZONTAL_CENTER, headerLabel, 0, SpringLayout.HORIZONTAL_CENTER, contentPane);
@@ -291,11 +290,11 @@ public class EditEmployee extends JFrame
 		layout.putConstraint(SpringLayout.WEST, workPhoneTF, 5, SpringLayout.EAST, workPhoneL);
 		layout.putConstraint(SpringLayout.NORTH, workPhoneTF, 0, SpringLayout.NORTH, workPhoneL);
 		
-		layout.putConstraint(SpringLayout.WEST, addB, 0, SpringLayout.WEST, homePhoneL);
-		layout.putConstraint(SpringLayout.NORTH, addB, 50, SpringLayout.NORTH, homePhoneL);
+		layout.putConstraint(SpringLayout.WEST, changeB, 0, SpringLayout.WEST, homePhoneL);
+		layout.putConstraint(SpringLayout.NORTH, changeB, 50, SpringLayout.NORTH, homePhoneL);
 		
 		layout.putConstraint(SpringLayout.WEST, cancelB, -30, SpringLayout.WEST, zipTF);
-		layout.putConstraint(SpringLayout.NORTH, cancelB, 0, SpringLayout.NORTH, addB);
+		layout.putConstraint(SpringLayout.NORTH, cancelB, 0, SpringLayout.NORTH, changeB);
 		
 		this.addWindowListener(new WindowAdapter(){
 			public void windowClosing(WindowEvent e){
@@ -305,7 +304,7 @@ public class EditEmployee extends JFrame
 			}
 		});
 		
-		addB.addActionListener(new ActionListener() {
+		changeB.addActionListener(new ActionListener() {
 			 
             public void actionPerformed(ActionEvent e)
             {
@@ -337,11 +336,11 @@ public class EditEmployee extends JFrame
 			JOptionPane.showMessageDialog(rootPane, "Error: Phone Number Format not Accepted.\nPossible Formats:\n5555555555\n555-555-5555\n555.555.5555\n555 555 5555\n(555)-555-5555");
 			return;
 		}
-
-		Date birthDate = new Date(Integer.parseInt(yearTF.getText())-1900, monthCB.getSelectedIndex(), Integer.parseInt(dateTF.getText()));
-		Employee newEmployee = new Employee(firstNameTF.getText(), lastNameTF.getText(), emailTF.getText(), titleTF.getText(), addressTF.getText(), cityTF.getText(), stateCB.getSelectedItem().toString(), homeTF.toString(), workTF.toString(), birthDate, Integer.parseInt(zipTF.getText()));
 		
-		newEmployee.addToDatabase();
+		Date birthDate = new Date(Integer.parseInt(yearTF.getText())-1900, monthCB.getSelectedIndex(), Integer.parseInt(dateTF.getText()));
+		Employee newEmployee = new Employee(firstNameTF.getText(), lastNameTF.getText(), emailTF.getText(), titleTF.getText(), addressTF.getText(), cityTF.getText(), stateCB.getSelectedItem().toString(), homeTF.toString(), workTF.toString(), birthDate, Integer.parseInt(zipTF.getText()), id);
+		
+		newEmployee.changeDetails();
 		
 		cancelListen();
 	}

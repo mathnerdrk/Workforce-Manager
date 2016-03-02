@@ -86,7 +86,22 @@ public class Employee
 		homePhone = hp;
 		workPhone = wp;
 		birth = b;
-//		System.out.println(firstName + " " + lastName + " " + email + " " + title + " " + address + " " + city + " " + state + " " + zip + " " + homePhone + " " + workPhone + " " + birth);
+	}
+	
+	public Employee(String f, String l, String e, String t, String a, String c, String s, String hp, String wp, Date b, int z, int i)
+	{
+		firstName = f;
+		lastName = l;
+		email = e;
+		title = t;
+		address = a;
+		city = c;
+		state = s;
+		zip = z;
+		homePhone = hp;
+		workPhone = wp;
+		birth = b;
+		id = i;
 	}
 	
 	public String getFirstName()
@@ -154,7 +169,7 @@ public class Employee
 		try
 		{
 			Connection con = DriverManager.getConnection(host, "root", "password1");
-						
+			
 			Statement stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
 			String SQL = "SELECT * FROM employees"; //workforce (database) --> employees (table)
 			ResultSet rs = stmt.executeQuery(SQL);
@@ -186,6 +201,42 @@ public class Employee
 	
 	public void changeDetails()
 	{
-		
+		try
+		{
+			Connection con = DriverManager.getConnection(host, "root", "password1");
+			
+			Statement stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+			String SQL = "SELECT * FROM employees"; //workforce (database) --> employees (table)
+			ResultSet rs = stmt.executeQuery(SQL);
+			
+			while(rs.next())
+			{
+				if(rs.getInt("id") == this.getID())
+				{
+					rs.updateString("FirstName", this.getFirstName());
+					rs.updateString("LastName", this.getLastName());
+					rs.updateString("Email", this.getEmail());
+					rs.updateString("Title", this.getTitle());
+					rs.updateString("Address", this.getAddress());
+					rs.updateString("City", this.getCity());
+					rs.updateString("State", this.getState());
+					rs.updateInt("ZipCode", this.getZipCode());
+					rs.updateDate("DateOfBirth", this.getBirth());
+					rs.updateString("H-Phone", this.getHomePhone());
+					rs.updateString("W-Phone", this.getWorkPhone());
+					rs.updateRow();
+					
+					JOptionPane.showMessageDialog(new JPanel(), "Success - Updated Employee");
+					return;
+				}
+			}
+			
+			JOptionPane.showMessageDialog(new JPanel(), "Failure - Employee Not Found");
+		}
+		catch(SQLException e)
+		{
+			JOptionPane.showMessageDialog(new JPanel(), "Error - Problem with the Server");
+			System.out.println(e.getMessage());
+		}
 	}
 }
