@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -109,6 +110,15 @@ public class EmployeeList extends JFrame
 		buttonPan.add(exitB);
 		contentPane.add(buttonPan);
 		
+		JPanel sortPan = new JPanel();
+		sortPan.setBackground(Color.white);
+		String[] sortOs = {"Sort By First Name", "Sort By Last Name", "Sort by Birth"};
+		JComboBox sortOptions = new JComboBox(sortOs);
+		JButton sortB = new JButton("Sort List");
+		sortPan.add(sortOptions);
+		sortPan.add(sortB);
+		contentPane.add(sortPan);
+		
 		layout.putConstraint(SpringLayout.HORIZONTAL_CENTER, headerPan, 0, SpringLayout.HORIZONTAL_CENTER, contentPane);
 		layout.putConstraint(SpringLayout.NORTH, headerPan, 0, SpringLayout.NORTH, contentPane);
 
@@ -117,6 +127,9 @@ public class EmployeeList extends JFrame
 		
 		layout.putConstraint(SpringLayout.WEST, buttonPan, 30, SpringLayout.WEST, contentPane);
 		layout.putConstraint(SpringLayout.SOUTH, buttonPan, 40, SpringLayout.SOUTH, tablePan);
+		
+		layout.putConstraint(SpringLayout.WEST, sortPan, 30, SpringLayout.WEST, contentPane);
+		layout.putConstraint(SpringLayout.SOUTH, sortPan, 40, SpringLayout.SOUTH, buttonPan);
 		
 		header.setVisible(true);
 		table.setVisible(true);
@@ -169,6 +182,14 @@ public class EmployeeList extends JFrame
             public void actionPerformed(ActionEvent e)
             {
             	exitActionListen();
+            }
+        });
+		
+		sortB.addActionListener(new ActionListener() {
+			 
+            public void actionPerformed(ActionEvent e)
+            {
+            	sortActionListen();
             }
         });
 		
@@ -287,6 +308,11 @@ public class EmployeeList extends JFrame
 	{
 		this.setVisible(false);
 		EditEmployee ee = new EditEmployee(new Employee(table.getSelectedRow(), fw));
+	}
+	
+	private void sortActionListen()
+	{
+		//SORT
 	}
 	
 	private void deleteActionListen()

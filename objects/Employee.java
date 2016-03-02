@@ -9,13 +9,12 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Comparator;
 
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-import com.mysql.jdbc.PreparedStatement;
-
-public class Employee 
+public class Employee
 {
 	String host = "jdbc:mysql://localhost:3306/workforce?useSSL=false";
 	
@@ -239,4 +238,31 @@ public class Employee
 			System.out.println(e.getMessage());
 		}
 	}
+
+	Comparator<Employee> rankFirstName =  new Comparator<Employee>() 
+	{
+		@Override
+		public int compare(Employee e1, Employee e2) 
+		{
+			return e1.getFirstName().compareTo(e2.getFirstName());
+		}
+    };
+    
+    Comparator<Employee> rankLastName =  new Comparator<Employee>() 
+	{
+		@Override
+		public int compare(Employee e1, Employee e2) 
+		{
+			return e1.getLastName().compareTo(e2.getLastName());
+		}
+    };
+    
+    Comparator<Employee> rankBirth =  new Comparator<Employee>() 
+	{
+		@Override
+		public int compare(Employee e1, Employee e2) 
+		{
+			return e1.getBirth().compareTo(e2.getBirth());
+		}
+    };
 }
