@@ -238,31 +238,4 @@ public class Employee
 			System.out.println(e.getMessage());
 		}
 	}
-
-	Comparator<Employee> rankFirstName =  new Comparator<Employee>() 
-	{
-		@Override
-		public int compare(Employee e1, Employee e2) 
-		{
-			return e1.getFirstName().compareTo(e2.getFirstName());
-		}
-    };
-    
-    Comparator<Employee> rankLastName =  new Comparator<Employee>() 
-	{
-		@Override
-		public int compare(Employee e1, Employee e2) 
-		{
-			return e1.getLastName().compareTo(e2.getLastName());
-		}
-    };
-    
-    Comparator<Employee> rankBirth =  new Comparator<Employee>() 
-	{
-		@Override
-		public int compare(Employee e1, Employee e2) 
-		{
-			return e1.getBirth().compareTo(e2.getBirth());
-		}
-    };
 }
