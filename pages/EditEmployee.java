@@ -57,17 +57,17 @@ public class EditEmployee extends JFrame
 		try {fw = new FileWriter(err);} 
 		catch (IOException e2) {e2.printStackTrace();}
 		
-		this.setTitle("Edit Employee");
+		this.setTitle("Workforce Manager Edit Employee");
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setVisible(true);
-		this.setSize(500, 300);
+		this.setSize(600, 400);
 		this.setResizable(false);
 		Container contentPane = this.getContentPane();
 		
 		SpringLayout layout = new SpringLayout();
 		contentPane.setLayout(layout);
 		
-		JLabel headerLabel = new JLabel("<HTML><U>Edit Employee:</U></HTML>");
+		JLabel headerLabel = new JLabel("Edit Employee");
 		headerLabel.setFont(headerLabel.getFont().deriveFont(14.0f));
 		JLabel firstNameL = new JLabel("First Name: ");
 		JLabel lastNameL = new JLabel("Last Name: ");
@@ -215,11 +215,13 @@ public class EditEmployee extends JFrame
 		contentPane.add(changeB);
 		contentPane.add(cancelB);
 		
+		int paddingHeight = 35;
+		
 		layout.putConstraint(SpringLayout.HORIZONTAL_CENTER, headerLabel, 0, SpringLayout.HORIZONTAL_CENTER, contentPane);
 		layout.putConstraint(SpringLayout.NORTH, headerLabel, 10, SpringLayout.NORTH, contentPane);
 		
 		layout.putConstraint(SpringLayout.WEST, firstNameL, 25, SpringLayout.WEST, contentPane);
-		layout.putConstraint(SpringLayout.NORTH, firstNameL, 25, SpringLayout.NORTH, headerLabel);
+		layout.putConstraint(SpringLayout.NORTH, firstNameL, (paddingHeight*4)/5, SpringLayout.NORTH, headerLabel);
 		
 		layout.putConstraint(SpringLayout.WEST, firstNameTF, 5, SpringLayout.EAST, firstNameL);
 		layout.putConstraint(SpringLayout.NORTH, firstNameTF, 0, SpringLayout.NORTH, firstNameL);
@@ -231,7 +233,7 @@ public class EditEmployee extends JFrame
 		layout.putConstraint(SpringLayout.NORTH, lastNameTF, 0, SpringLayout.NORTH, lastNameL);	
 		
 		layout.putConstraint(SpringLayout.WEST, emailL, 0, SpringLayout.WEST, firstNameL);
-		layout.putConstraint(SpringLayout.NORTH, emailL, 25, SpringLayout.NORTH, firstNameL);
+		layout.putConstraint(SpringLayout.NORTH, emailL, paddingHeight, SpringLayout.NORTH, firstNameL);
 		
 		layout.putConstraint(SpringLayout.WEST, emailTF, 5, SpringLayout.EAST, emailL);
 		layout.putConstraint(SpringLayout.NORTH, emailTF, 0, SpringLayout.NORTH, emailL);
@@ -243,13 +245,13 @@ public class EditEmployee extends JFrame
 		layout.putConstraint(SpringLayout.NORTH, titleTF, 0, SpringLayout.NORTH, titleL);
 		
 		layout.putConstraint(SpringLayout.WEST, addressL, 0, SpringLayout.WEST, emailL);
-		layout.putConstraint(SpringLayout.NORTH, addressL, 25, SpringLayout.NORTH, emailL);
+		layout.putConstraint(SpringLayout.NORTH, addressL, paddingHeight, SpringLayout.NORTH, emailL);
 		
 		layout.putConstraint(SpringLayout.WEST, addressTF, 5, SpringLayout.EAST, addressL);
 		layout.putConstraint(SpringLayout.NORTH, addressTF, 0, SpringLayout.NORTH, addressL);
 		
 		layout.putConstraint(SpringLayout.WEST, cityL, 0, SpringLayout.WEST, addressL);
-		layout.putConstraint(SpringLayout.NORTH, cityL, 25, SpringLayout.NORTH, addressL);
+		layout.putConstraint(SpringLayout.NORTH, cityL, paddingHeight, SpringLayout.NORTH, addressL);
 		
 		layout.putConstraint(SpringLayout.WEST, cityTF, 5, SpringLayout.EAST, cityL);
 		layout.putConstraint(SpringLayout.NORTH, cityTF, 0, SpringLayout.NORTH, cityL);
@@ -267,7 +269,7 @@ public class EditEmployee extends JFrame
 		layout.putConstraint(SpringLayout.NORTH, zipTF, 0, SpringLayout.NORTH, zipL);
 		
 		layout.putConstraint(SpringLayout.WEST, birthL, 0, SpringLayout.WEST, cityL);
-		layout.putConstraint(SpringLayout.NORTH, birthL, 25, SpringLayout.NORTH, cityL);
+		layout.putConstraint(SpringLayout.NORTH, birthL, paddingHeight, SpringLayout.NORTH, cityL);
 		
 		layout.putConstraint(SpringLayout.WEST, monthCB, 5, SpringLayout.EAST, birthL);
 		layout.putConstraint(SpringLayout.NORTH, monthCB, 0, SpringLayout.NORTH, birthL);
@@ -279,7 +281,7 @@ public class EditEmployee extends JFrame
 		layout.putConstraint(SpringLayout.NORTH, yearTF, 0, SpringLayout.NORTH, dateTF);
 		
 		layout.putConstraint(SpringLayout.WEST, homePhoneL, 0, SpringLayout.WEST, birthL);
-		layout.putConstraint(SpringLayout.NORTH, homePhoneL, 25, SpringLayout.NORTH, birthL);
+		layout.putConstraint(SpringLayout.NORTH, homePhoneL, paddingHeight, SpringLayout.NORTH, birthL);
 		
 		layout.putConstraint(SpringLayout.WEST, homePhoneTF, 5, SpringLayout.EAST, homePhoneL);
 		layout.putConstraint(SpringLayout.NORTH, homePhoneTF, 0, SpringLayout.NORTH, homePhoneL);
@@ -291,7 +293,7 @@ public class EditEmployee extends JFrame
 		layout.putConstraint(SpringLayout.NORTH, workPhoneTF, 0, SpringLayout.NORTH, workPhoneL);
 		
 		layout.putConstraint(SpringLayout.WEST, changeB, 0, SpringLayout.WEST, homePhoneL);
-		layout.putConstraint(SpringLayout.NORTH, changeB, 50, SpringLayout.NORTH, homePhoneL);
+		layout.putConstraint(SpringLayout.NORTH, changeB, paddingHeight, SpringLayout.NORTH, homePhoneL);
 		
 		layout.putConstraint(SpringLayout.WEST, cancelB, -30, SpringLayout.WEST, zipTF);
 		layout.putConstraint(SpringLayout.NORTH, cancelB, 0, SpringLayout.NORTH, changeB);
