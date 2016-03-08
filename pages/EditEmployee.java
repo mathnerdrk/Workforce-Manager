@@ -80,8 +80,8 @@ public class EditEmployee extends JFrame
 		JLabel homePhoneL = new JLabel("Home Phone #: ");
 		JLabel workPhoneL = new JLabel("Work Phone #: ");
 		JLabel birthL = new JLabel("Date of Birth: ");
-		JButton changeB = new JButton("Change Employee");
-		JButton cancelB = new JButton("Cancel Addition");
+		JButton changeB = new JButton("            Apply            ");
+		JButton cancelB = new JButton("            Cancel            ");
 		
 		try
 		{		
@@ -223,10 +223,10 @@ public class EditEmployee extends JFrame
 		layout.putConstraint(SpringLayout.WEST, firstNameL, 25, SpringLayout.WEST, contentPane);
 		layout.putConstraint(SpringLayout.NORTH, firstNameL, (paddingHeight*4)/5, SpringLayout.NORTH, headerLabel);
 		
-		layout.putConstraint(SpringLayout.WEST, firstNameTF, 5, SpringLayout.EAST, firstNameL);
+		layout.putConstraint(SpringLayout.WEST, firstNameTF, 120, SpringLayout.WEST, contentPane);
 		layout.putConstraint(SpringLayout.NORTH, firstNameTF, 0, SpringLayout.NORTH, firstNameL);
 		
-		layout.putConstraint(SpringLayout.WEST, lastNameL, 25, SpringLayout.EAST, firstNameTF);
+		layout.putConstraint(SpringLayout.WEST, lastNameL, 25, SpringLayout.EAST, emailTF);
 		layout.putConstraint(SpringLayout.NORTH, lastNameL, 0, SpringLayout.NORTH, firstNameL);
 		
 		layout.putConstraint(SpringLayout.WEST, lastNameTF, 5, SpringLayout.EAST, lastNameL);
@@ -235,7 +235,7 @@ public class EditEmployee extends JFrame
 		layout.putConstraint(SpringLayout.WEST, emailL, 0, SpringLayout.WEST, firstNameL);
 		layout.putConstraint(SpringLayout.NORTH, emailL, paddingHeight, SpringLayout.NORTH, firstNameL);
 		
-		layout.putConstraint(SpringLayout.WEST, emailTF, 5, SpringLayout.EAST, emailL);
+		layout.putConstraint(SpringLayout.WEST, emailTF, 0, SpringLayout.WEST, firstNameTF);
 		layout.putConstraint(SpringLayout.NORTH, emailTF, 0, SpringLayout.NORTH, emailL);
 		
 		layout.putConstraint(SpringLayout.WEST, titleL, 25, SpringLayout.EAST, emailTF);
@@ -247,13 +247,13 @@ public class EditEmployee extends JFrame
 		layout.putConstraint(SpringLayout.WEST, addressL, 0, SpringLayout.WEST, emailL);
 		layout.putConstraint(SpringLayout.NORTH, addressL, paddingHeight, SpringLayout.NORTH, emailL);
 		
-		layout.putConstraint(SpringLayout.WEST, addressTF, 5, SpringLayout.EAST, addressL);
+		layout.putConstraint(SpringLayout.WEST, addressTF, 0, SpringLayout.WEST, emailTF);
 		layout.putConstraint(SpringLayout.NORTH, addressTF, 0, SpringLayout.NORTH, addressL);
 		
 		layout.putConstraint(SpringLayout.WEST, cityL, 0, SpringLayout.WEST, addressL);
 		layout.putConstraint(SpringLayout.NORTH, cityL, paddingHeight, SpringLayout.NORTH, addressL);
 		
-		layout.putConstraint(SpringLayout.WEST, cityTF, 5, SpringLayout.EAST, cityL);
+		layout.putConstraint(SpringLayout.WEST, cityTF, 0, SpringLayout.WEST, addressTF);
 		layout.putConstraint(SpringLayout.NORTH, cityTF, 0, SpringLayout.NORTH, cityL);
 		
 		layout.putConstraint(SpringLayout.WEST, stateL, 25, SpringLayout.EAST, cityTF);
@@ -271,7 +271,7 @@ public class EditEmployee extends JFrame
 		layout.putConstraint(SpringLayout.WEST, birthL, 0, SpringLayout.WEST, cityL);
 		layout.putConstraint(SpringLayout.NORTH, birthL, paddingHeight, SpringLayout.NORTH, cityL);
 		
-		layout.putConstraint(SpringLayout.WEST, monthCB, 5, SpringLayout.EAST, birthL);
+		layout.putConstraint(SpringLayout.WEST, monthCB, 0, SpringLayout.WEST, cityTF);
 		layout.putConstraint(SpringLayout.NORTH, monthCB, 0, SpringLayout.NORTH, birthL);
 		
 		layout.putConstraint(SpringLayout.WEST, dateTF, 10, SpringLayout.EAST, monthCB);
@@ -283,7 +283,7 @@ public class EditEmployee extends JFrame
 		layout.putConstraint(SpringLayout.WEST, homePhoneL, 0, SpringLayout.WEST, birthL);
 		layout.putConstraint(SpringLayout.NORTH, homePhoneL, paddingHeight, SpringLayout.NORTH, birthL);
 		
-		layout.putConstraint(SpringLayout.WEST, homePhoneTF, 5, SpringLayout.EAST, homePhoneL);
+		layout.putConstraint(SpringLayout.WEST, homePhoneTF, 0, SpringLayout.WEST, monthCB);
 		layout.putConstraint(SpringLayout.NORTH, homePhoneTF, 0, SpringLayout.NORTH, homePhoneL);
 		
 		layout.putConstraint(SpringLayout.WEST, workPhoneL, 25, SpringLayout.EAST, homePhoneTF);

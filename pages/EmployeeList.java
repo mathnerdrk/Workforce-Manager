@@ -286,12 +286,22 @@ public class EmployeeList extends JFrame
 	
 	private void editActionListen()
 	{
+		if(table.getSelectedRow() < 0)
+		{
+			JOptionPane.showMessageDialog(rootPane, "Failure - No Row Selected");
+			return;
+		}
 		this.setVisible(false);
 		EditEmployee ee = new EditEmployee(new Employee(table.getSelectedRow(), fw));
 	}
 		
 	private void deleteActionListen()
 	{
+		if(table.getSelectedRow() < 0)
+		{
+			JOptionPane.showMessageDialog(rootPane, "Failure - No Row Selected");
+			return;
+		}
 		int result = JOptionPane.showConfirmDialog(this, "Warning: Are you sure you want to delete this employee?");
 		if(result == JOptionPane.YES_OPTION)
 		{

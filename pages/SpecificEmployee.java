@@ -52,7 +52,7 @@ public class SpecificEmployee extends JFrame
 		this.setTitle("Worforce Manager Employee Details");
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setVisible(true);
-		this.setSize(500, 300);
+		this.setSize(500, 270);
 		this.setResizable(false);
 		Container contentPane = this.getContentPane();
 		
