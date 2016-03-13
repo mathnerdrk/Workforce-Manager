@@ -60,7 +60,7 @@ public class EditEmployee extends JFrame
 		this.setTitle("Workforce Manager Edit Employee");
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setVisible(true);
-		this.setSize(600, 400);
+		this.setSize(555, 325);
 		this.setResizable(false);
 		Container contentPane = this.getContentPane();
 		
@@ -295,7 +295,7 @@ public class EditEmployee extends JFrame
 		layout.putConstraint(SpringLayout.WEST, changeB, 0, SpringLayout.WEST, homePhoneL);
 		layout.putConstraint(SpringLayout.NORTH, changeB, paddingHeight, SpringLayout.NORTH, homePhoneL);
 		
-		layout.putConstraint(SpringLayout.WEST, cancelB, -30, SpringLayout.WEST, zipTF);
+		layout.putConstraint(SpringLayout.WEST, cancelB, -50, SpringLayout.WEST, zipTF);
 		layout.putConstraint(SpringLayout.NORTH, cancelB, 0, SpringLayout.NORTH, changeB);
 		
 		this.addWindowListener(new WindowAdapter(){
@@ -327,7 +327,7 @@ public class EditEmployee extends JFrame
 	{
 		if(Integer.parseInt(dateTF.getText()) > 31)
 		{
-			JOptionPane.showMessageDialog(rootPane, "Error: Date is larger than 31");
+			JOptionPane.showMessageDialog(rootPane, "Please Enter a Date from 1-31");
 			return;
 		}
 		
@@ -335,7 +335,7 @@ public class EditEmployee extends JFrame
 		StringBuilder workTF = new StringBuilder(workPhoneTF.getText());
 		if(!validatePhoneNumber(homeTF) || !validatePhoneNumber(workTF))
 		{
-			JOptionPane.showMessageDialog(rootPane, "Error: Phone Number Format not Accepted.\nPossible Formats:\n5555555555\n555-555-5555\n555.555.5555\n555 555 5555\n(555)-555-5555");
+			JOptionPane.showMessageDialog(rootPane, "Phone Number Format not Accepted.\nPlease use one of the Following:\n5555555555\n555-555-5555\n555.555.5555\n555 555 5555\n(555)-555-5555");
 			return;
 		}
 		

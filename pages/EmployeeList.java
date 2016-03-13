@@ -288,7 +288,7 @@ public class EmployeeList extends JFrame
 	{
 		if(table.getSelectedRow() < 0)
 		{
-			JOptionPane.showMessageDialog(rootPane, "Failure - No Row Selected");
+			JOptionPane.showMessageDialog(rootPane, "Please Select a Row");
 			return;
 		}
 		this.setVisible(false);
@@ -299,7 +299,7 @@ public class EmployeeList extends JFrame
 	{
 		if(table.getSelectedRow() < 0)
 		{
-			JOptionPane.showMessageDialog(rootPane, "Failure - No Row Selected");
+			JOptionPane.showMessageDialog(rootPane, "Please Select a Row");
 			return;
 		}
 		int result = JOptionPane.showConfirmDialog(this, "Warning: Are you sure you want to delete this employee?");
