@@ -21,7 +21,6 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -30,6 +29,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.SpringLayout;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 
@@ -38,7 +38,7 @@ import com.workforce.objects.Employee;
 public class EmployeeList extends JFrame 
 {
 	String host = "jdbc:mysql://localhost:3306/workforce?useSSL=false";
-	Object[][] data;
+	String[][] data;
 	String[] columns;
 	FileWriter fw;
 	File err = new File("error.txt");
@@ -71,7 +71,7 @@ public class EmployeeList extends JFrame
 		
 		JPanel headerPan = new JPanel();
 		headerPan.setBackground(Color.white);
-		JLabel header = new JLabel("Employee List:");
+		JLabel header = new JLabel("Employee List");
 		header.setFont(header.getFont().deriveFont(18.0f));
 		header.setVisible(false);
 		headerPan.add(header);
@@ -81,7 +81,7 @@ public class EmployeeList extends JFrame
 		tablePan.setBackground(Color.white);
 		table = new JTable(data, columns);
 		table.setModel(new MyModel(data, columns));
-		table.setPreferredScrollableViewportSize(new Dimension(width-76, this.height-240));
+		table.setPreferredScrollableViewportSize(new Dimension(width-76, this.height-180));
 		table.setFillsViewportHeight(true);
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		table.getTableHeader().setResizingAllowed(false);
@@ -89,9 +89,11 @@ public class EmployeeList extends JFrame
 		table.setVisible(false);
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		TableColumnModel tcm = table.getColumnModel();
+		((DefaultTableCellRenderer)table.getTableHeader().getDefaultRenderer()).setHorizontalAlignment(JLabel.LEFT);
 		setColumnWidth(tcm);
 		tablePan.add(table);
 		JScrollPane inputPane = new JScrollPane(table, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		inputPane.setAlignmentX(LEFT_ALIGNMENT);
 		tablePan.add(inputPane);
 		contentPane.add(tablePan);
 		
@@ -100,24 +102,13 @@ public class EmployeeList extends JFrame
 		JButton addB = new JButton("Add Employee");
 		JButton deleteB = new JButton("Delete Selection");
 		JButton editB = new JButton("Edit Selection");
-//		JButton refreshB = new JButton("Refresh Page");
 		JButton exitB = new JButton("Exit Program");
 		
 		buttonPan.add(addB);
 		buttonPan.add(deleteB);
 		buttonPan.add(editB);
-//		buttonPan.add(refreshB);
 		buttonPan.add(exitB);
 		contentPane.add(buttonPan);
-		
-		JPanel sortPan = new JPanel();
-		sortPan.setBackground(Color.white);
-		String[] sortOs = {"Sort By First Name", "Sort By Last Name", "Sort by Birth"};
-		JComboBox sortOptions = new JComboBox(sortOs);
-		JButton sortB = new JButton("Sort List");
-		sortPan.add(sortOptions);
-		sortPan.add(sortB);
-		contentPane.add(sortPan);
 		
 		layout.putConstraint(SpringLayout.HORIZONTAL_CENTER, headerPan, 0, SpringLayout.HORIZONTAL_CENTER, contentPane);
 		layout.putConstraint(SpringLayout.NORTH, headerPan, 0, SpringLayout.NORTH, contentPane);
@@ -127,9 +118,6 @@ public class EmployeeList extends JFrame
 		
 		layout.putConstraint(SpringLayout.WEST, buttonPan, 30, SpringLayout.WEST, contentPane);
 		layout.putConstraint(SpringLayout.SOUTH, buttonPan, 40, SpringLayout.SOUTH, tablePan);
-		
-		layout.putConstraint(SpringLayout.WEST, sortPan, 30, SpringLayout.WEST, contentPane);
-		layout.putConstraint(SpringLayout.SOUTH, sortPan, 40, SpringLayout.SOUTH, buttonPan);
 		
 		header.setVisible(true);
 		table.setVisible(true);
@@ -182,14 +170,6 @@ public class EmployeeList extends JFrame
             public void actionPerformed(ActionEvent e)
             {
             	exitActionListen();
-            }
-        });
-		
-		sortB.addActionListener(new ActionListener() {
-			 
-            public void actionPerformed(ActionEvent e)
-            {
-            	sortActionListen();
             }
         });
 		
@@ -261,10 +241,10 @@ public class EmployeeList extends JFrame
 			}
 			
 			columns = new String[4];
-			columns[0] = "Name:";
-			columns[1] = "Username:";
-			columns[2] = "Email:";
-			columns[3] = "Job Title:";
+			columns[0] = "Name";
+			columns[1] = "Username";
+			columns[2] = "Email";
+			columns[3] = "Job Title";
 			
 		}
 		catch(SQLException e)
@@ -306,17 +286,22 @@ public class EmployeeList extends JFrame
 	
 	private void editActionListen()
 	{
+		if(table.getSelectedRow() < 0)
+		{
+			JOptionPane.showMessageDialog(rootPane, "Please Select a Row");
+			return;
+		}
 		this.setVisible(false);
 		EditEmployee ee = new EditEmployee(new Employee(table.getSelectedRow(), fw));
 	}
-	
-	private void sortActionListen()
-	{
-		//SORT
-	}
-	
+		
 	private void deleteActionListen()
 	{
+		if(table.getSelectedRow() < 0)
+		{
+			JOptionPane.showMessageDialog(rootPane, "Please Select a Row");
+			return;
+		}
 		int result = JOptionPane.showConfirmDialog(this, "Warning: Are you sure you want to delete this employee?");
 		if(result == JOptionPane.YES_OPTION)
 		{
@@ -368,7 +353,6 @@ public class EmployeeList extends JFrame
 		tcm.getColumn(2).setPreferredWidth(185); //405
 		tcm.getColumn(3).setPreferredWidth(120); //540 +- 15
 	}
-	
 }
 
 class MyModel extends DefaultTableModel {
@@ -382,3 +366,4 @@ class MyModel extends DefaultTableModel {
         return false;
     }
 }
+
